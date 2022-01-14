@@ -37,7 +37,32 @@ class WritePage extends GetView<WriteController> {
             ),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.defaultDialog(
+                    title: 'Signature',
+                    content: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Text(
+                          'Author',
+                          textAlign: TextAlign.left,
+                        ),
+                        TextField(
+                          controller: controller.authorController,
+                        )
+                      ],
+                    ),
+                    confirm: TextButton(
+                      onPressed: () {
+                        controller.saveStory();
+
+                      },
+                      child: const Text(
+                        'Confirm',
+                      ),
+                    ),
+                  );
+                },
                 icon: Image.asset(HalloweenImages.share),
               ),
             ],
@@ -51,35 +76,37 @@ class WritePage extends GetView<WriteController> {
                   SizedBox(
                     width: size.width * .8,
                     height: size.height * .1,
-                    child: const TextField(
+                    child: TextField(
+                      controller: controller.titleController,
                       textCapitalization: TextCapitalization.sentences,
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.multiline,
                       maxLines: 2,
-                      decoration: InputDecoration.collapsed(
+                      decoration: const InputDecoration.collapsed(
                         hintText: 'Story title',
                         hintStyle: TextStyle(
                           color: HalloweenColors.white,
                         ),
                       ),
-                      style:
-                          TextStyle(fontSize: 30, color: HalloweenColors.white),
+                      style: const TextStyle(
+                          fontSize: 30, color: HalloweenColors.white),
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: TextField(
+                      controller: controller.textController,
                       textCapitalization: TextCapitalization.sentences,
                       scrollPhysics: BouncingScrollPhysics(),
                       textAlign: TextAlign.left,
                       keyboardType: TextInputType.multiline,
                       maxLines: 99999,
-                      decoration: InputDecoration.collapsed(
+                      decoration: const InputDecoration.collapsed(
                         hintText: 'Tell your story...',
                         hintStyle: TextStyle(
                           color: HalloweenColors.white,
                         ),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontFamily: 'RedHat',
                         color: HalloweenColors.white,
@@ -111,6 +138,18 @@ class WritePage extends GetView<WriteController> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildDialog() {
+    return Card(
+      color: HalloweenColors.light,
+      child: Column(
+        children: const [
+          Text('Author'),
+          TextField(),
+        ],
+      ),
     );
   }
 }

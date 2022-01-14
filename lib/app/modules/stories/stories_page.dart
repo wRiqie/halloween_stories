@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:halloween_stories/app/core/theme/halloween/halloween_colors.dart';
@@ -6,6 +7,7 @@ import 'package:halloween_stories/app/core/values/halloween_images.dart';
 import 'package:halloween_stories/app/data/model/story.dart';
 import 'package:halloween_stories/app/modules/stories/stories_controller.dart';
 import 'package:halloween_stories/app/routes/app_pages.dart';
+import 'package:share/share.dart';
 
 class StoriesPage extends GetView<StoriesController> {
   const StoriesPage({Key? key}) : super(key: key);
@@ -148,62 +150,84 @@ class StoriesPage extends GetView<StoriesController> {
   }
 
   Widget _buildStoryCard(Story story) {
-    return Card(
-      elevation: 2,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(6),
-        ),
-      ),
-      color: HalloweenColors.primaryLight,
-      child: InkWell(
-        onTap: () {},
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Slidable(
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
           children: [
-            Container(
-              margin: const EdgeInsets.all(6),
-              height: 130,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(6))),
-              child: Image.asset(
-                HalloweenImages.storyBg,
-                fit: BoxFit.fill,
-              ),
-            ),
-            Text(
-              story.author,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  color: HalloweenColors.light,
-                  fontFamily: 'RedHat',
-                  fontSize: 16,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w300),
-            ),
-            Text(
-              story.title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  color: HalloweenColors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              'Tag line',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: HalloweenColors.white,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(
-              height: 30,
+            SlidableAction(
+              onPressed: (context) {
+                controller.deleteStory(story.id);
+              },
+              backgroundColor: Colors.redAccent,
+              foregroundColor: HalloweenColors.white,
+              icon: Icons.delete,
+              label: 'Delete',
             ),
           ],
+        ),
+        child: Card(
+          elevation: 2,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(6),
+            ),
+          ),
+          color: HalloweenColors.primaryLight,
+          child: InkWell(
+            onTap: () {
+              Share.share(
+                  '*${story.title}*\n${story.text}\n_By ${story.author}_');
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(6),
+                  height: 130,
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(6))),
+                  child: Image.asset(
+                    HalloweenImages.storyBg,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                Text(
+                  story.author,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: HalloweenColors.light,
+                      fontFamily: 'RedHat',
+                      fontSize: 16,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w300),
+                ),
+                Text(
+                  story.title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: HalloweenColors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  'Tag line',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: HalloweenColors.white,
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

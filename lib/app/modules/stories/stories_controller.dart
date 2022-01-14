@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:halloween_stories/app/data/model/story.dart';
 import 'package:halloween_stories/app/data/repository/story_repository.dart';
 
 class StoriesController extends GetxController {
@@ -12,6 +13,13 @@ class StoriesController extends GetxController {
       stories.value = value;
       isLoading.value = false;
     });
+  }
+
+  deleteStory(int id) async {
+    var result = await repository.deleteStory(id);
+    if(result != -1){
+      stories.removeWhere((x) => x.id == id);
+    }
   }
 
   @override
