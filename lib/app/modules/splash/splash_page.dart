@@ -60,7 +60,7 @@ class SplashPage extends GetView<SplashController> {
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

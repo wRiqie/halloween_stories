@@ -27,27 +27,64 @@ class StoriesPage extends GetView<StoriesController> {
         backgroundColor: HalloweenColors.orange,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Stack(
-                children: const [
-                  Text(
-                '🎃 Spooky\nInteractive Story',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: HalloweenColors.white,
-                  fontSize: 35,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Stack(
+              children: [
+                SizedBox(
+                  height: size.height * .3,
+                  child: Image.asset(
+                    HalloweenImages.pumpkins,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-                ],
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              const Text(
+                Container(
+                  height: size.height * .3,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: FractionalOffset.topCenter,
+                      end: FractionalOffset.bottomCenter,
+                      colors: [
+                        HalloweenColors.primaryDark.withOpacity(0),
+                        const Color(0xFF2B2E44),
+                      ],
+                      stops: const [
+                        0.7,
+                        1,
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: size.height * .3,
+                  color: HalloweenColors.primaryDark.withOpacity(0.7),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: SizedBox(
+                    height: size.height * .3,
+                    child: const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '🎃\nSpooky\nInteractive\nStory',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: HalloweenColors.white,
+                          fontSize: 35,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
                 'Stories',
                 textAlign: TextAlign.left,
                 style: TextStyle(
@@ -56,25 +93,32 @@ class StoriesPage extends GetView<StoriesController> {
                   fontSize: 20,
                 ),
               ),
-              const SizedBox(
-                height: 24,
-              ),
-              Expanded(
-                child: Obx(() => controller.isLoading.value
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                        color: HalloweenColors.orange,
-                      ))
-                    : controller.stories.isNotEmpty
-                        ? ListView.builder(
-                            itemCount: controller.stories.length,
-                            itemBuilder: (_, index) {
-                              return _buildStoryCard(controller.stories[index]);
-                            })
-                        : Column(
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            Expanded(
+              child: Obx(() => controller.isLoading.value
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                      color: HalloweenColors.orange,
+                    ))
+                  : controller.stories.isNotEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: ListView.builder(
+                              itemCount: controller.stories.length,
+                              itemBuilder: (_, index) {
+                                return _buildStoryCard(
+                                    controller.stories[index]);
+                              }),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: Column(
                             children: [
                               const SizedBox(
-                                height: 80,
+                                height: 30,
                               ),
                               SizedBox(
                                 height: size.height * .2,
@@ -94,10 +138,10 @@ class StoriesPage extends GetView<StoriesController> {
                                 ),
                               ),
                             ],
-                          )),
-              ),
-            ],
-          ),
+                          ),
+                        )),
+            ),
+          ],
         ),
       ),
     );

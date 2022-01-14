@@ -23,7 +23,7 @@ abstract class AppPages {
       name: Routes.write,
       page: () => const WritePage(),
       binding: WriteBinding(),
-      transition: Transition.circularReveal 
+      transition: Transition.downToUp 
     ),
   ];
 }
