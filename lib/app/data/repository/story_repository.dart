@@ -12,4 +12,7 @@ class StoryRepository {
 
   Future<int> deleteStory(int id)
     => db.deleteStory(id);
+
+  Future<int> updateStory(Story story)
+    => db.updateStory(story);
 }

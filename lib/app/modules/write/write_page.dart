@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:halloween_stories/app/core/theme/halloween/halloween_colors.dart';
 import 'package:halloween_stories/app/core/values/halloween_images.dart';
 import 'package:halloween_stories/app/modules/write/write_controller.dart';
+import 'package:badges/badges.dart';
 
 class WritePage extends GetView<WriteController> {
   const WritePage({Key? key}) : super(key: key);
@@ -39,26 +40,41 @@ class WritePage extends GetView<WriteController> {
               IconButton(
                 onPressed: () {
                   Get.defaultDialog(
+                    titlePadding: const EdgeInsets.symmetric(vertical: 5),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     title: 'Signature',
+                    titleStyle: const TextStyle(color: HalloweenColors.light),
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const Text(
                           'Author',
                           textAlign: TextAlign.left,
+                          style: TextStyle(fontFamily: 'RedHat'),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         TextField(
                           controller: controller.authorController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Your name here',
+                          ),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'RedHat',
+                          ),
                         )
                       ],
                     ),
-                    confirm: TextButton(
+                    confirm: ElevatedButton(
                       onPressed: () {
                         controller.saveStory();
-
                       },
                       child: const Text(
-                        'Confirm',
+                        'Save your story',
                       ),
                     ),
                   );
@@ -96,7 +112,7 @@ class WritePage extends GetView<WriteController> {
                     child: TextField(
                       controller: controller.textController,
                       textCapitalization: TextCapitalization.sentences,
-                      scrollPhysics: BouncingScrollPhysics(),
+                      scrollPhysics: const BouncingScrollPhysics(),
                       textAlign: TextAlign.left,
                       keyboardType: TextInputType.multiline,
                       maxLines: 99999,
@@ -117,9 +133,72 @@ class WritePage extends GetView<WriteController> {
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (_) {
+                            return Wrap(
+                              children: [
+                                ListTile(
+                                    leading: const Icon(
+                                      Icons.tag,
+                                      color: HalloweenColors.orange,
+                                    ),
+                                    title: const Text('Add Tags'),
+                                    onTap: () {}),
+                                ListTile(
+                                  leading: const Icon(
+                                    Icons.photo,
+                                    color: HalloweenColors.orange,
+                                  ),
+                                  title: const Text('Story Photo'),
+                                  onTap: () {
+                                    Get.back();
+                                    Get.defaultDialog(
+                                      titlePadding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 5),
+                                      title: 'Story Photo',
+                                      titleStyle: const TextStyle(
+                                          color: HalloweenColors.light),
+                                      content: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: (){
+                                            },
+                                            child: Container(
+                                              color: HalloweenColors.primaryDark,
+                                              height: 200,
+                                              width: 200,
+                                              child: Image.asset(
+                                                HalloweenImages.storyBg,
+                                                fit: BoxFit.contain,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      confirm: ElevatedButton(
+                                        onPressed: () {
+                                        },
+                                        child: const Text(
+                                          'Save',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
                       child: const Text(
-                        'Option Text',
+                        'More',
                         style: TextStyle(
                           fontFamily: 'RedHat',
                           fontWeight: FontWeight.bold,
@@ -138,18 +217,6 @@ class WritePage extends GetView<WriteController> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildDialog() {
-    return Card(
-      color: HalloweenColors.light,
-      child: Column(
-        children: const [
-          Text('Author'),
-          TextField(),
-        ],
-      ),
     );
   }
 }

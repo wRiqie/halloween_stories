@@ -3,11 +3,13 @@ class Story {
   late String title;
   late String text;
   late String author;
+  String? photo;
 
   Story({
     required this.title,
     required this.text,
     required this.author,
+    photo,
   });
 
   Story.fromMap(Map<String, dynamic> map) {
@@ -15,6 +17,7 @@ class Story {
     title = map['title'];
     text = map['text'];
     author = map['author'];
+    photo = map['photo'];
   }
 
   Map<String, dynamic> toMap() {
@@ -22,6 +25,7 @@ class Story {
     data['title'] = title;
     data['text'] = text;
     data['author'] = author;
+    data['photo'] = photo;
     return data;
   }
 }

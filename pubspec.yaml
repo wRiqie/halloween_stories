@@ -40,6 +40,9 @@ dependencies:
   sqflite: ^2.0.2
   path: ^1.8.0
   flutter_slidable: ^1.2.0
+  badges: ^2.0.2
+  image_picker: ^0.8.4+4
+  image_cropper: ^1.4.1
 
 dev_dependencies:
   flutter_test:

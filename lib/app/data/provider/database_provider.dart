@@ -35,19 +35,21 @@ class DatabaseProvider {
   static const storyTitle = 'title';
   static const storyText = 'text';
   static const storyAuthor = 'author';
+  static const storyPhoto = 'photo';
 
   final _createTableUser = """
       CREATE TABLE IF NOT EXISTS $storyTable (
         $storyId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         $storyTitle TEXT,
         $storyText TEXT,
-        $storyAuthor TEXT
+        $storyAuthor TEXT,
+        $storyPhoto TEXT
       );
   """;
 
   Future<int> saveStory(Story story) async {
     final db = await database;
-    if(db != null){
+    if (db != null) {
       var res = await db.insert(storyTable, story.toMap());
       return res;
     }
@@ -68,8 +70,18 @@ class DatabaseProvider {
 
   Future<int> deleteStory(int id) async {
     final db = await database;
-    if(db != null){
+    if (db != null) {
       return db.delete(storyTable, where: '$storyId = ?', whereArgs: [id]);
+    }
+    return -1;
+  }
+
+  Future<int> updateStory(Story story) async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.update(storyTable, story.toMap(),
+          where: '$storyId = ?', whereArgs: [story.id]);
+      return res;
     }
     return -1;
   }
