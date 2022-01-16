@@ -135,27 +135,7 @@ class WritePage extends GetView<WriteController> {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (_) {
-                            return Wrap(
-                              children: [
-                                ListTile(
-                                    leading: const Icon(
-                                      Icons.tag,
-                                      color: HalloweenColors.orange,
-                                    ),
-                                    title: const Text('Add Tags'),
-                                    onTap: () {}),
-                                ListTile(
-                                  leading: const Icon(
-                                    Icons.photo,
-                                    color: HalloweenColors.orange,
-                                  ),
-                                  title: const Text('Story Photo'),
-                                  onTap: () {
-                                    Get.back();
-                                    Get.defaultDialog(
+                        Get.defaultDialog(
                                       titlePadding: const EdgeInsets.symmetric(
                                           vertical: 5),
                                       contentPadding:
@@ -199,15 +179,9 @@ class WritePage extends GetView<WriteController> {
                                         ),
                                       ),
                                     );
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
                       },
                       child: const Text(
-                        'More',
+                        'Photo',
                         style: TextStyle(
                           fontFamily: 'RedHat',
                           fontWeight: FontWeight.bold,

@@ -16,11 +16,10 @@ class StoriesController extends GetxController {
 
   deleteStory(int id) async {
     var result = await repository.deleteStory(id);
-    if(result != -1){
+    if (result != -1) {
       stories.removeWhere((x) => x.id == id);
     }
   }
-  
 
   @override
   void onInit() {

@@ -25,7 +25,7 @@ class Utility {
     Uint8List bytes = base64.decode(encodedStr);
     String dir = (await getTemporaryDirectory()).path;
     File file = File(
-        "$dir/" + DateTime.now().millisecondsSinceEpoch.toString() + ".pdf");
+        "$dir/" + DateTime.now().millisecondsSinceEpoch.toString() + ".png");
     await file.writeAsBytes(bytes);
     return file.path;
  }

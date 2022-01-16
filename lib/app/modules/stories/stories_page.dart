@@ -7,7 +7,7 @@ import 'package:halloween_stories/app/core/values/halloween_images.dart';
 import 'package:halloween_stories/app/data/model/story.dart';
 import 'package:halloween_stories/app/modules/stories/stories_controller.dart';
 import 'package:halloween_stories/app/routes/app_pages.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class StoriesPage extends GetView<StoriesController> {
   const StoriesPage({Key? key}) : super(key: key);
@@ -237,7 +237,10 @@ class StoriesPage extends GetView<StoriesController> {
                   constraints: const BoxConstraints(maxHeight: 200),
                   margin: const EdgeInsets.all(6),
                   decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(6))),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(6),
+                    ),
+                  ),
                   child: story.photo.isEmpty
                       ? Image.asset(HalloweenImages.storyBg,
                           fit: BoxFit.contain)
@@ -265,14 +268,31 @@ class StoriesPage extends GetView<StoriesController> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
-                  'Tag line',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: HalloweenColors.white,
-                    fontSize: 18,
-                  ),
-                ),
+                // Obx(
+                //   () => story.tags != null
+                //       ? story.tags!.isNotEmpty
+                //           ? Container(
+                //               width: 30,
+                //               height: 30,
+                //               color: HalloweenColors.orange,
+                //             )
+                //           : const Text(
+                //               'No Tags',
+                //               textAlign: TextAlign.center,
+                //               style: TextStyle(
+                //                 color: HalloweenColors.white,
+                //                 fontSize: 18,
+                //               ),
+                //             )
+                //       : const Text(
+                //           'No Tags',
+                //           textAlign: TextAlign.center,
+                //           style: TextStyle(
+                //             color: HalloweenColors.white,
+                //             fontSize: 18,
+                //           ),
+                //         ),
+                // ),
                 const SizedBox(
                   height: 30,
                 ),

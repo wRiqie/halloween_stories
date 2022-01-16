@@ -18,6 +18,7 @@ class WriteController extends GetxController {
   final authorController = TextEditingController();
   final args = Get.arguments;
   final storyPhoto = ''.obs;
+  
   Story? editingStory;
 
   void saveStory() async {

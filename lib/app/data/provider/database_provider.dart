@@ -1,4 +1,5 @@
 import 'package:halloween_stories/app/data/model/story.dart';
+import 'package:halloween_stories/app/data/model/tag.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -23,9 +24,13 @@ class DatabaseProvider {
       path,
       version: 1,
       onOpen: (db) async {
-        await db.execute(_createTableUser);
+        await db.execute(_createTableStory);
+        await db.execute(_createTableTag);
       },
-      onCreate: (Database db, int version) async {},
+      onCreate: (Database db, int version) async {
+        await db.execute(_createTableStory);
+        await db.execute(_createTableTag);
+      },
     );
   }
 
@@ -37,7 +42,7 @@ class DatabaseProvider {
   static const storyAuthor = 'author';
   static const storyPhoto = 'photo';
 
-  final _createTableUser = """
+  final _createTableStory = """
       CREATE TABLE IF NOT EXISTS $storyTable (
         $storyId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         $storyTitle TEXT,
@@ -82,6 +87,57 @@ class DatabaseProvider {
       var res = await db.update(storyTable, story.toMap(),
           where: '$storyId = ?', whereArgs: [story.id]);
       return res;
+    }
+    return -1;
+  }
+
+  // Tags
+  static const tagTable = 'tag';
+  static const tagId = 'id';
+  static const tagName = 'name';
+  static const tagStoryId = 'storyId';
+
+  final _createTableTag = """
+      CREATE TABLE IF NOT EXISTS $tagTable (
+        $tagId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        $tagName TEXT,
+        $tagStoryId INTEGER
+      );
+  """;
+
+  Future<int> saveTag(Tag tag) async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.insert(tagTable, tag.toMap());
+      return res;
+    }
+    return -1;
+  }
+
+  Future<List<Tag>> getTags(int storyId) async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.query(tagTable, where: '$tagStoryId = ?', whereArgs: [storyId]);
+      List<Tag> tags = res.isNotEmpty
+          ? res.map((tag) => Tag.fromMap(tag)).toList()
+          : [];
+      return tags;
+    }
+    return [];
+  }
+
+  Future<int> deleteTag(int id) async {
+    final db = await database;
+    if (db != null) {
+      return db.delete(tagTable, where: '$tagId = ?', whereArgs: [id]);
+    }
+    return -1;
+  }
+
+  Future<int> deleteTags(int storyId) async {
+    final db = await database;
+    if (db != null) {
+      return db.delete(tagTable, where: '$tagStoryId = ?', whereArgs: [storyId]);
     }
     return -1;
   }
