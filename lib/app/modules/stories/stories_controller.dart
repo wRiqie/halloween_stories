@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:halloween_stories/app/data/model/story.dart';
 import 'package:halloween_stories/app/data/repository/story_repository.dart';
 
 class StoriesController extends GetxController {
@@ -21,6 +20,7 @@ class StoriesController extends GetxController {
       stories.removeWhere((x) => x.id == id);
     }
   }
+  
 
   @override
   void onInit() {

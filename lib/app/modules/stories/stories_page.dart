@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:halloween_stories/app/core/theme/halloween/halloween_colors.dart';
+import 'package:halloween_stories/app/core/utils/utility.dart';
 import 'package:halloween_stories/app/core/values/halloween_images.dart';
 import 'package:halloween_stories/app/data/model/story.dart';
 import 'package:halloween_stories/app/modules/stories/stories_controller.dart';
@@ -207,10 +208,22 @@ class StoriesPage extends GetView<StoriesController> {
                             color: HalloweenColors.orange,
                           ),
                           title: const Text('Share'),
-                          onTap: () {
+                          onTap: () async {
                             Get.back();
+                            if (story.photo.isNotEmpty) {
+                              Share.shareFiles(
+                                [
+                                  await Utility.createFileFromString(
+                                      story.photo)
+                                ],
+                                text:
+                                    '*${story.title}*\n\n${story.text}\n\n_By ${story.author}_',
+                              );
+                              return;
+                            }
                             Share.share(
-                                '*${story.title}*\n\n${story.text}\n\n_By ${story.author}_');
+                              '*${story.title}*\n\n${story.text}\n\n_By ${story.author}_',
+                            );
                           },
                         ),
                       ],
@@ -221,14 +234,14 @@ class StoriesPage extends GetView<StoriesController> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
+                  constraints: const BoxConstraints(maxHeight: 200),
                   margin: const EdgeInsets.all(6),
-                  height: 130,
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(6))),
-                  child: Image.asset(
-                    HalloweenImages.storyBg,
-                    fit: BoxFit.fill,
-                  ),
+                  child: story.photo.isEmpty
+                      ? Image.asset(HalloweenImages.storyBg,
+                          fit: BoxFit.contain)
+                      : Utility.imageFromBase64String(story.photo),
                 ),
                 Text(
                   story.author,
@@ -242,6 +255,7 @@ class StoriesPage extends GetView<StoriesController> {
                 ),
                 Text(
                   story.title,
+                  maxLines: 2,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       color: HalloweenColors.white,

@@ -3,13 +3,13 @@ class Story {
   late String title;
   late String text;
   late String author;
-  String? photo;
+  late String photo;
 
   Story({
     required this.title,
     required this.text,
     required this.author,
-    photo,
+    required this.photo,
   });
 
   Story.fromMap(Map<String, dynamic> map) {

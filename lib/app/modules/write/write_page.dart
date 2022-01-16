@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:halloween_stories/app/core/theme/halloween/halloween_colors.dart';
+import 'package:halloween_stories/app/core/utils/utility.dart';
 import 'package:halloween_stories/app/core/values/halloween_images.dart';
 import 'package:halloween_stories/app/modules/write/write_controller.dart';
 import 'package:badges/badges.dart';
@@ -168,25 +169,33 @@ class WritePage extends GetView<WriteController> {
                                             CrossAxisAlignment.stretch,
                                         children: [
                                           GestureDetector(
-                                            onTap: (){
-                                            },
-                                            child: Container(
-                                              color: HalloweenColors.primaryDark,
-                                              height: 200,
-                                              width: 200,
-                                              child: Image.asset(
-                                                HalloweenImages.storyBg,
-                                                fit: BoxFit.contain,
+                                            onTap: controller.swapPhoto,
+                                            child: Obx(
+                                              () => Container(
+                                                color:
+                                                    HalloweenColors.primaryDark,
+                                                height: 200,
+                                                width: 200,
+                                                child: controller.storyPhoto
+                                                        .value.isEmpty
+                                                    ? Image.asset(
+                                                        HalloweenImages.storyBg,
+                                                        fit: BoxFit.contain,
+                                                      )
+                                                    : Utility
+                                                        .imageFromBase64String(
+                                                        controller
+                                                            .storyPhoto.value,
+                                                      ),
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                      confirm: ElevatedButton(
-                                        onPressed: () {
-                                        },
+                                      confirm: TextButton(
+                                        onPressed: controller.swapPhoto,
                                         child: const Text(
-                                          'Save',
+                                          'Swap Photo',
                                         ),
                                       ),
                                     );
