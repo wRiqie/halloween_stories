@@ -4,8 +4,8 @@ import 'package:halloween_stories/app/data/provider/database_provider.dart';
 class TagRepository {
   final db = DatabaseProvider.db;
 
-  Future<int> saveTag(Tag tag)
-    => db.saveTag(tag);
+  Future<int> saveTags(List<Tag> tags)
+    => db.saveTags(tags);
 
   Future<List<Tag>> getTags(int storyId)
     => db.getTags(storyId);

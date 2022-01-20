@@ -44,24 +44,24 @@ class WritePage extends GetView<WriteController> {
                     titlePadding: const EdgeInsets.symmetric(vertical: 5),
                     contentPadding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    title: 'Signature',
+                    title: 'signature'.tr,
                     titleStyle: const TextStyle(color: HalloweenColors.light),
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Text(
-                          'Author',
+                        Text(
+                          'author'.tr,
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontFamily: 'RedHat'),
+                          style: const TextStyle(fontFamily: 'RedHat'),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         TextField(
                           controller: controller.authorController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Your name here',
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            hintText: 'your_name'.tr,
                           ),
                           style: const TextStyle(
                             fontSize: 16,
@@ -74,8 +74,8 @@ class WritePage extends GetView<WriteController> {
                       onPressed: () {
                         controller.saveStory();
                       },
-                      child: const Text(
-                        'Save your story',
+                      child: Text(
+                        'save'.tr,
                       ),
                     ),
                   );
@@ -99,9 +99,9 @@ class WritePage extends GetView<WriteController> {
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.multiline,
                       maxLines: 2,
-                      decoration: const InputDecoration.collapsed(
-                        hintText: 'Story title',
-                        hintStyle: TextStyle(
+                      decoration: InputDecoration.collapsed(
+                        hintText: 'story_title'.tr,
+                        hintStyle: const TextStyle(
                           color: HalloweenColors.white,
                         ),
                       ),
@@ -117,9 +117,9 @@ class WritePage extends GetView<WriteController> {
                       textAlign: TextAlign.left,
                       keyboardType: TextInputType.multiline,
                       maxLines: 99999,
-                      decoration: const InputDecoration.collapsed(
-                        hintText: 'Tell your story...',
-                        hintStyle: TextStyle(
+                      decoration: InputDecoration.collapsed(
+                        hintText: 'tell_story'.tr,
+                        hintStyle: const TextStyle(
                           color: HalloweenColors.white,
                         ),
                       ),
@@ -135,13 +135,36 @@ class WritePage extends GetView<WriteController> {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.defaultDialog(
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (_) {
+                            return Wrap(
+                              children: [
+                                ListTile(
+                                    leading: const Icon(
+                                      Icons.tag,
+                                      color: HalloweenColors.orange,
+                                    ),
+                                    title: const Text('Add Tags'),
+                                    onTap: () {
+                                      Get.back();
+                                      
+                                    }),
+                                ListTile(
+                                  leading: const Icon(
+                                    Icons.photo,
+                                    color: HalloweenColors.orange,
+                                  ),
+                                  title: const Text('Story Photo'),
+                                  onTap: () {
+                                    Get.back();
+                                    Get.defaultDialog(
                                       titlePadding: const EdgeInsets.symmetric(
                                           vertical: 5),
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                               horizontal: 10, vertical: 5),
-                                      title: 'Story Photo',
+                                      title: 'story_photo'.tr,
                                       titleStyle: const TextStyle(
                                           color: HalloweenColors.light),
                                       content: Column(
@@ -174,14 +197,20 @@ class WritePage extends GetView<WriteController> {
                                       ),
                                       confirm: TextButton(
                                         onPressed: controller.swapPhoto,
-                                        child: const Text(
-                                          'Swap Photo',
+                                        child: Text(
+                                          'swap_photo'.tr,
                                         ),
                                       ),
                                     );
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       child: const Text(
-                        'Photo',
+                        'More',
                         style: TextStyle(
                           fontFamily: 'RedHat',
                           fontWeight: FontWeight.bold,

@@ -35,6 +35,7 @@ class StoriesPage extends GetView<StoriesController> {
             Stack(
               children: [
                 SizedBox(
+                  width: size.width,
                   height: size.height * .3,
                   child: Image.asset(
                     HalloweenImages.pumpkins,
@@ -66,12 +67,12 @@ class StoriesPage extends GetView<StoriesController> {
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: SizedBox(
                     height: size.height * .3,
-                    child: const Align(
+                    child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        '🎃\nSpooky\nInteractive\nStory',
+                        'title_column'.tr,
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: HalloweenColors.white,
                           fontSize: 35,
                         ),
@@ -84,12 +85,12 @@ class StoriesPage extends GetView<StoriesController> {
             const SizedBox(
               height: 24,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Text(
-                'Stories',
+                'stories'.tr,
                 textAlign: TextAlign.left,
-                style: TextStyle(
+                style: const TextStyle(
                   color: HalloweenColors.yellow,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -134,10 +135,10 @@ class StoriesPage extends GetView<StoriesController> {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                const Text(
-                                  '🧟 Try adding a story\nto make you shiver...',
+                                Text(
+                                  'stories_empty'.tr,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: HalloweenColors.white,
                                     fontSize: 18,
                                   ),
@@ -167,7 +168,7 @@ class StoriesPage extends GetView<StoriesController> {
               backgroundColor: Colors.redAccent,
               foregroundColor: HalloweenColors.white,
               icon: Icons.delete,
-              label: 'Delete',
+              label: 'delete'.tr,
             ),
           ],
         ),
@@ -191,7 +192,7 @@ class StoriesPage extends GetView<StoriesController> {
                               Icons.edit,
                               color: HalloweenColors.orange,
                             ),
-                            title: const Text('Edit'),
+                            title: Text('edit'.tr),
                             onTap: () {
                               Get.back();
                               Get.toNamed(
@@ -207,7 +208,7 @@ class StoriesPage extends GetView<StoriesController> {
                             Icons.share,
                             color: HalloweenColors.orange,
                           ),
-                          title: const Text('Share'),
+                          title: Text('share'.tr),
                           onTap: () async {
                             Get.back();
                             if (story.photo.isNotEmpty) {

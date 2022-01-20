@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:halloween_stories/app/core/theme/halloween/halloween_colors.dart';
 import 'package:halloween_stories/app/data/model/story.dart';
+import 'package:halloween_stories/app/data/model/tag.dart';
 import 'package:halloween_stories/app/data/repository/story_repository.dart';
+import 'package:halloween_stories/app/data/repository/tag_repository.dart';
 import 'package:halloween_stories/app/routes/app_pages.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,12 +15,15 @@ import 'package:image_picker/image_picker.dart';
 class WriteController extends GetxController {
   final imgSource = ImageSource.gallery;
   final repository = Get.find<StoryRepository>();
+  final tagRepository = Get.find<TagRepository>();
   final titleController = TextEditingController();
   final textController = TextEditingController();
   final authorController = TextEditingController();
+  final tagController = TextEditingController();
   final args = Get.arguments;
   final storyPhoto = ''.obs;
-  
+  final tags = <Tag>[].obs;
+
   Story? editingStory;
 
   void saveStory() async {
@@ -26,7 +31,7 @@ class WriteController extends GetxController {
         textController.text.isEmpty ||
         authorController.text.isEmpty) {
       Get.rawSnackbar(
-        message: 'Hey, finish your story by filling in all the fields',
+        message: 'incomplete_story_alert'.tr,
         backgroundColor: HalloweenColors.orange,
       );
       return;
@@ -38,21 +43,33 @@ class WriteController extends GetxController {
       editingStory?.author = authorController.text;
       editingStory?.photo = storyPhoto.value;
       result = await repository.updateStory(editingStory!);
+      for (var tag in tags) {
+        tag.storyId = editingStory?.id ?? 0;
+      }
+      await tagRepository.saveTags(tags);
     } else {
       Story story = Story(
         title: titleController.text,
         text: textController.text,
         author: authorController.text,
         photo: storyPhoto.value,
+        tags: [],
       );
       result = await repository.saveStory(story);
+      for (var tag in tags) {
+        tag.storyId = result;
+      }
+      await tagRepository.saveTags(tags);
     }
-    if (result != -1) {
+    if (result != -1) { 
       Get.offAllNamed(Routes.stories);
+      Get.rawSnackbar(
+          message: 'save_success'.tr,
+          backgroundColor: HalloweenColors.primaryLight);
       return;
     }
     Get.rawSnackbar(
-      message: 'Unable to save your story, please try again',
+      message: 'error_save'.tr,
       backgroundColor: HalloweenColors.orange,
     );
   }
@@ -74,8 +91,8 @@ class WriteController extends GetxController {
   cropImage(File img) async {
     var imgCropped = await ImageCropper.cropImage(
       sourcePath: img.path,
-      androidUiSettings: const AndroidUiSettings(
-        toolbarTitle: 'Edit Photo',
+      androidUiSettings: AndroidUiSettings(
+        toolbarTitle: 'edit_photo'.tr,
         toolbarColor: HalloweenColors.orange,
         toolbarWidgetColor: HalloweenColors.light,
         backgroundColor: HalloweenColors.primaryDark,
@@ -89,6 +106,15 @@ class WriteController extends GetxController {
     return null;
   }
 
+  addTag(String tagName) {
+    Tag tag = Tag(
+      id: 0,
+      storyId: 0,
+      name: tagName,
+    );
+    tags.add(tag);
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -98,6 +124,7 @@ class WriteController extends GetxController {
       titleController.text = editingStory?.title ?? '';
       textController.text = editingStory?.text ?? '';
       authorController.text = editingStory?.author ?? '';
+      tags.value = editingStory?.tags ?? [];
     }
   }
 

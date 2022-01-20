@@ -6,14 +6,14 @@ class Story {
   late String text;
   late String author;
   late String photo;
-  // List<Tag>? tags;
+  List<Tag>? tags;
 
   Story({
     required this.title,
     required this.text,
     required this.author,
     required this.photo,
-    // required this.tags,
+    required this.tags,
   });
 
   Story.fromMap(Map<String, dynamic> map) {

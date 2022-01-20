@@ -68,6 +68,10 @@ class DatabaseProvider {
       List<Story> stories = res.isNotEmpty
           ? res.map((story) => Story.fromMap(story)).toList()
           : [];
+      await Future.forEach<Story>(stories, (e) async {
+        var tags = await getTags(e.id);
+        e.tags = tags;
+      });
       return stories;
     }
     return [];
@@ -105,11 +109,17 @@ class DatabaseProvider {
       );
   """;
 
-  Future<int> saveTag(Tag tag) async {
+  Future<int> saveTags(List<Tag> tags) async {
     final db = await database;
     if (db != null) {
-      var res = await db.insert(tagTable, tag.toMap());
-      return res;
+      for (var tag in tags) {
+        await db.insert(
+          tagTable,
+          tag.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+      return 0;
     }
     return -1;
   }
@@ -117,10 +127,10 @@ class DatabaseProvider {
   Future<List<Tag>> getTags(int storyId) async {
     final db = await database;
     if (db != null) {
-      var res = await db.query(tagTable, where: '$tagStoryId = ?', whereArgs: [storyId]);
-      List<Tag> tags = res.isNotEmpty
-          ? res.map((tag) => Tag.fromMap(tag)).toList()
-          : [];
+      var res = await db
+          .query(tagTable, where: '$tagStoryId = ?', whereArgs: [storyId]);
+      List<Tag> tags =
+          res.isNotEmpty ? res.map((tag) => Tag.fromMap(tag)).toList() : [];
       return tags;
     }
     return [];
@@ -137,7 +147,8 @@ class DatabaseProvider {
   Future<int> deleteTags(int storyId) async {
     final db = await database;
     if (db != null) {
-      return db.delete(tagTable, where: '$tagStoryId = ?', whereArgs: [storyId]);
+      return db
+          .delete(tagTable, where: '$tagStoryId = ?', whereArgs: [storyId]);
     }
     return -1;
   }

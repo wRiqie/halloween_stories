@@ -32,10 +32,10 @@ class SplashPage extends GetView<SplashController> {
               ),
               SizedBox(
                 width: size.width * .7,
-                child: const Text(
-                  '🎃 Spooky\nInteractive Story',
+                child: Text(
+                  'title'.tr,
                   textAlign: TextAlign.left,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: HalloweenColors.white,
                     fontSize: 35,
                   ),

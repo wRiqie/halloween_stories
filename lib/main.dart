@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:halloween_stories/app/core/theme/halloween/halloween_theme.dart';
+import 'package:halloween_stories/app/core/values/translation.dart';
 import 'package:halloween_stories/app/modules/splash/splash_binding.dart';
 import 'package:halloween_stories/app/routes/app_pages.dart';
 import 'package:flutter/services.dart';
@@ -26,7 +27,10 @@ class MyApp extends StatelessWidget {
       initialRoute: Routes.splash,
       initialBinding: SplashBinding(),
       theme: halloweenThemeData,
+      translationsKeys: AppTranslation().keys,
       defaultTransition: Transition.fadeIn,
+      locale: Get.deviceLocale ?? const Locale('en', 'US'),
+      fallbackLocale: const Locale('en', 'US'),
     );
   }
 }
