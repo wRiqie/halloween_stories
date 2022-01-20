@@ -11,7 +11,7 @@ class TagsController extends GetxController {
 
   addTag() {
     if(tagsController.text.removeAllWhitespace.isNotEmpty){
-      tags.add(Tag(id: 0, storyId: 0, name: tagsController.text));
+      tags.add(Tag(id: 0, storyId: 0, name: tagsController.text.trim()));
       tagsController.text = '';
     }
   }

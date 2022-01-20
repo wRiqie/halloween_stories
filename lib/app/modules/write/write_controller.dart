@@ -37,9 +37,9 @@ class WriteController extends GetxController {
     }
     int result = 0;
     if (editingStory != null) {
-      editingStory?.title = titleController.text;
-      editingStory?.text = textController.text;
-      editingStory?.author = authorController.text;
+      editingStory?.title = titleController.text.trim();
+      editingStory?.text = textController.text.trim();
+      editingStory?.author = authorController.text.trim();
       editingStory?.photo = storyPhoto.value;
       result = await repository.updateStory(editingStory!);
       for (var tag in tags) {
@@ -48,9 +48,9 @@ class WriteController extends GetxController {
       await tagRepository.saveTags(tags.where((e) => e.id == 0).toList());
     } else {
       Story story = Story(
-        title: titleController.text,
-        text: textController.text,
-        author: authorController.text,
+        title: titleController.text.trim(),
+        text: textController.text.trim(),
+        author: authorController.text.trim(),
         photo: storyPhoto.value,
         tags: [],
       );

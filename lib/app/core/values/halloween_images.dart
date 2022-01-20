@@ -5,5 +5,5 @@ class HalloweenImages {
   static const String writeBg = 'assets/images/write_bg.png';
   static const String arrowBack = 'assets/images/arrow_back.png';
   static const String share = 'assets/images/share.png';
-  static const String jasonMask = 'assets/images/jason_mask.png';
+  static const String headlessKnight = 'assets/images/headlessKnight.png';
 }

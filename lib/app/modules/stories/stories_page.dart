@@ -8,7 +8,6 @@ import 'package:halloween_stories/app/data/model/story.dart';
 import 'package:halloween_stories/app/data/model/tag.dart';
 import 'package:halloween_stories/app/modules/stories/stories_controller.dart';
 import 'package:halloween_stories/app/routes/app_pages.dart';
-import 'package:share_plus/share_plus.dart';
 
 class StoriesPage extends GetView<StoriesController> {
   const StoriesPage({Key? key}) : super(key: key);

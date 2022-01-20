@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:halloween_stories/app/core/theme/halloween/halloween_colors.dart';
 import 'package:halloween_stories/app/core/values/halloween_images.dart';
@@ -50,33 +51,22 @@ class TagsPage extends GetView<TagsController> {
                 height: 30,
               ),
               Obx(() => Expanded(
-                    child: controller.tags.isNotEmpty
-                        ? SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Wrap(
-                              direction: Axis.horizontal,
-                              children: controller.tags
-                                  .map(
-                                    (e) => InkWell(
-                                      onLongPress: () {
-                                        controller.removeTag(e);
-                                      },
-                                      child: _buildTag(e),
-                                    ),
-                                  )
-                                  .toList(),
+                      child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      children: controller.tags
+                          .map(
+                            (e) => InkWell(
+                              onLongPress: () {
+                                controller.removeTag(e);
+                              },
+                              child: _buildTag(e),
                             ),
                           )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                child: Image.asset(HalloweenImages.jasonMask),
-                              ),
-                              const Text('Tente adicionar uma tag...')
-                            ],
-                          ),
-                  )),
+                          .toList(),
+                    ),
+                  ))),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(

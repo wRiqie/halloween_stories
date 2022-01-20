@@ -29,20 +29,22 @@ class StoriesController extends GetxController {
 
   shareStory(Story story) async {
     String tags = '';
+    String separation = '';
     if (story.photo.isNotEmpty) {
       if (story.tags != null && story.tags!.isNotEmpty) {
+        separation = '\n';
         for (var tag in story.tags!) {
           tags = tags + '#${tag.name}  ';
         }
       }
       Share.shareFiles(
         [await Utility.createFileFromString(story.photo)],
-        text: '*${story.title}*\n$tags\n\n${story.text}\n\n_By ${story.author}_',
+        text: '*${story.title}*\n$tags\n$separation${story.text}\n\n_By ${story.author}_',
       );
       return;
     }
     Share.share(
-      '*${story.title}*\n$tags\n\n${story.text}\n\n_By ${story.author}_',
+      '*${story.title}*\n$tags\n$separation${story.text}\n\n_By ${story.author}_',
     );
   }
 
