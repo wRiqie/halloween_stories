@@ -4,4 +4,5 @@ abstract class Routes{
   static const splash = '/splash';
   static const stories = '/stories';
   static const write = '/write';
+  static const tags = '/tags';
 }

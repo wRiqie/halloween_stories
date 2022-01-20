@@ -19,10 +19,9 @@ class WriteController extends GetxController {
   final titleController = TextEditingController();
   final textController = TextEditingController();
   final authorController = TextEditingController();
-  final tagController = TextEditingController();
   final args = Get.arguments;
   final storyPhoto = ''.obs;
-  final tags = <Tag>[].obs;
+  List<Tag> tags = [];
 
   Story? editingStory;
 
@@ -61,7 +60,7 @@ class WriteController extends GetxController {
       }
       await tagRepository.saveTags(tags);
     }
-    if (result != -1) { 
+    if (result != -1) {
       Get.offAllNamed(Routes.stories);
       Get.rawSnackbar(
           message: 'save_success'.tr,
@@ -106,13 +105,14 @@ class WriteController extends GetxController {
     return null;
   }
 
-  addTag(String tagName) {
-    Tag tag = Tag(
-      id: 0,
-      storyId: 0,
-      name: tagName,
+  addTags() async {
+    var res = await Get.toNamed(
+      Routes.tags,
+      arguments: {'tags': tags},
     );
-    tags.add(tag);
+    if(res != null){
+      tags = res['tags'];
+    }
   }
 
   @override
@@ -124,7 +124,7 @@ class WriteController extends GetxController {
       titleController.text = editingStory?.title ?? '';
       textController.text = editingStory?.text ?? '';
       authorController.text = editingStory?.author ?? '';
-      tags.value = editingStory?.tags ?? [];
+      tags = editingStory?.tags ?? [];
     }
   }
 

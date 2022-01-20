@@ -124,11 +124,11 @@ class DatabaseProvider {
     return -1;
   }
 
-  Future<List<Tag>> getTags(int storyId) async {
+  Future<List<Tag>> getTags(int id) async {
     final db = await database;
     if (db != null) {
       var res = await db
-          .query(tagTable, where: '$tagStoryId = ?', whereArgs: [storyId]);
+          .query(tagTable, where: '$tagStoryId = ?', whereArgs: [id]);
       List<Tag> tags =
           res.isNotEmpty ? res.map((tag) => Tag.fromMap(tag)).toList() : [];
       return tags;
@@ -144,11 +144,21 @@ class DatabaseProvider {
     return -1;
   }
 
-  Future<int> deleteTags(int storyId) async {
+  Future<int> deleteSelectedTags(List<int> tagsId) async {
+    final db = await database;
+    if (db != null) {
+      for (var id in tagsId) {
+        await db.delete(tagTable, where: '$tagId = ?', whereArgs: [id]);
+      }
+    }
+    return -1;
+  }
+
+  Future<int> deleteTags(int id) async {
     final db = await database;
     if (db != null) {
       return db
-          .delete(tagTable, where: '$tagStoryId = ?', whereArgs: [storyId]);
+          .delete(tagTable, where: '$tagStoryId = ?', whereArgs: [id]);
     }
     return -1;
   }

@@ -13,6 +13,9 @@ class TagRepository {
   Future<int> deleteTag(int id)
     => db.deleteTag(id);
 
+  Future<int> deleteSelectedTags(List<int> tagsId)
+    => db.deleteSelectedTags(tagsId);
+
   Future<int> deleteTags(int storyId)
     => db.deleteTags(storyId);
 }

@@ -5,6 +5,7 @@ import 'package:halloween_stories/app/core/theme/halloween/halloween_colors.dart
 import 'package:halloween_stories/app/core/utils/utility.dart';
 import 'package:halloween_stories/app/core/values/halloween_images.dart';
 import 'package:halloween_stories/app/data/model/story.dart';
+import 'package:halloween_stories/app/data/model/tag.dart';
 import 'package:halloween_stories/app/modules/stories/stories_controller.dart';
 import 'package:halloween_stories/app/routes/app_pages.dart';
 import 'package:share_plus/share_plus.dart';
@@ -211,20 +212,7 @@ class StoriesPage extends GetView<StoriesController> {
                           title: Text('share'.tr),
                           onTap: () async {
                             Get.back();
-                            if (story.photo.isNotEmpty) {
-                              Share.shareFiles(
-                                [
-                                  await Utility.createFileFromString(
-                                      story.photo)
-                                ],
-                                text:
-                                    '*${story.title}*\n\n${story.text}\n\n_By ${story.author}_',
-                              );
-                              return;
-                            }
-                            Share.share(
-                              '*${story.title}*\n\n${story.text}\n\n_By ${story.author}_',
-                            );
+                            controller.shareStory(story);
                           },
                         ),
                       ],
@@ -269,38 +257,55 @@ class StoriesPage extends GetView<StoriesController> {
                 const SizedBox(
                   height: 20,
                 ),
-                // Obx(
-                //   () => story.tags != null
-                //       ? story.tags!.isNotEmpty
-                //           ? Container(
-                //               width: 30,
-                //               height: 30,
-                //               color: HalloweenColors.orange,
-                //             )
-                //           : const Text(
-                //               'No Tags',
-                //               textAlign: TextAlign.center,
-                //               style: TextStyle(
-                //                 color: HalloweenColors.white,
-                //                 fontSize: 18,
-                //               ),
-                //             )
-                //       : const Text(
-                //           'No Tags',
-                //           textAlign: TextAlign.center,
-                //           style: TextStyle(
-                //             color: HalloweenColors.white,
-                //             fontSize: 18,
-                //           ),
-                //         ),
-                // ),
+                story.tags != null
+                    ? story.tags!.isNotEmpty
+                        ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: story.tags!.map((e) => _buildTag(e)).toList(),
+                              ),
+                            ),
+                        )
+                        : const Text(
+                            'No Tags',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: HalloweenColors.white,
+                              fontSize: 18,
+                            ),
+                          )
+                    : const Text(
+                        'No Tags',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: HalloweenColors.white,
+                          fontSize: 18,
+                        ),
+                      ),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTag(Tag tag) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: HalloweenColors.primaryDark,
+      ),
+      child: Text(
+        tag.name,
+        style: const TextStyle(color: HalloweenColors.light),
       ),
     );
   }

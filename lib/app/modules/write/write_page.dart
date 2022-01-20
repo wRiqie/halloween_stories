@@ -5,6 +5,7 @@ import 'package:halloween_stories/app/core/utils/utility.dart';
 import 'package:halloween_stories/app/core/values/halloween_images.dart';
 import 'package:halloween_stories/app/modules/write/write_controller.dart';
 import 'package:badges/badges.dart';
+import 'package:halloween_stories/app/routes/app_pages.dart';
 
 class WritePage extends GetView<WriteController> {
   const WritePage({Key? key}) : super(key: key);
@@ -148,7 +149,7 @@ class WritePage extends GetView<WriteController> {
                                     title: const Text('Add Tags'),
                                     onTap: () {
                                       Get.back();
-                                      
+                                      controller.addTags();
                                     }),
                                 ListTile(
                                   leading: const Icon(

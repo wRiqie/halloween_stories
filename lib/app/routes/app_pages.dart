@@ -3,6 +3,8 @@ import 'package:halloween_stories/app/modules/splash/splash_binding.dart';
 import 'package:halloween_stories/app/modules/splash/splash_page.dart';
 import 'package:halloween_stories/app/modules/stories/stories_binding.dart';
 import 'package:halloween_stories/app/modules/stories/stories_page.dart';
+import 'package:halloween_stories/app/modules/tags/tags_binding.dart';
+import 'package:halloween_stories/app/modules/tags/tags_page.dart';
 import 'package:halloween_stories/app/modules/write/write_binding.dart';
 import 'package:halloween_stories/app/modules/write/write_page.dart';
 part './app_routes.dart';
@@ -23,7 +25,13 @@ abstract class AppPages {
       name: Routes.write,
       page: () => const WritePage(),
       binding: WriteBinding(),
-      transition: Transition.downToUp 
+      transition: Transition.downToUp,
+    ),
+    GetPage(
+      name: Routes.tags,
+      page: () => const TagsPage(),
+      binding: TagsBinding(),
+      transition: Transition.downToUp,
     ),
   ];
 }
