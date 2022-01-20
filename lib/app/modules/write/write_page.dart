@@ -146,7 +146,7 @@ class WritePage extends GetView<WriteController> {
                                       Icons.tag,
                                       color: HalloweenColors.orange,
                                     ),
-                                    title: const Text('Add Tags'),
+                                    title: Text('Add tags'.tr),
                                     onTap: () {
                                       Get.back();
                                       controller.addTags();
@@ -156,7 +156,7 @@ class WritePage extends GetView<WriteController> {
                                     Icons.photo,
                                     color: HalloweenColors.orange,
                                   ),
-                                  title: const Text('Story Photo'),
+                                  title: Text('storyPhoto'.tr),
                                   onTap: () {
                                     Get.back();
                                     Get.defaultDialog(

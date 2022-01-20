@@ -45,7 +45,7 @@ class WriteController extends GetxController {
       for (var tag in tags) {
         tag.storyId = editingStory?.id ?? 0;
       }
-      await tagRepository.saveTags(tags);
+      await tagRepository.saveTags(tags.where((e) => e.id == 0).toList());
     } else {
       Story story = Story(
         title: titleController.text,
@@ -110,7 +110,7 @@ class WriteController extends GetxController {
       Routes.tags,
       arguments: {'tags': tags},
     );
-    if(res != null){
+    if (res != null) {
       tags = res['tags'];
     }
   }

@@ -261,25 +261,27 @@ class StoriesPage extends GetView<StoriesController> {
                     ? story.tags!.isNotEmpty
                         ? Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: story.tags!.map((e) => _buildTag(e)).toList(),
+                          child: Center(
+                            child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: story.tags!.map((e) => _buildTag(e)).toList(),
+                                ),
                               ),
-                            ),
+                          ),
                         )
-                        : const Text(
-                            'No Tags',
+                        : Text(
+                            'noTags'.tr,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: HalloweenColors.white,
                               fontSize: 18,
                             ),
                           )
-                    : const Text(
-                        'No Tags',
+                    : Text(
+                        'noTags'.tr,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: HalloweenColors.white,
                           fontSize: 18,
                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:halloween_stories/app/core/theme/halloween/halloween_colors.dart';
+import 'package:halloween_stories/app/core/values/halloween_images.dart';
 import 'package:halloween_stories/app/data/model/tag.dart';
 import 'package:halloween_stories/app/modules/tags/tags_controller.dart';
 
@@ -12,11 +13,12 @@ class TagsPage extends GetView<TagsController> {
     final size = Get.size;
 
     return Scaffold(
+      backgroundColor: HalloweenColors.primaryDark,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: const Text(
-          'Adicionar Tags',
+        title: Text(
+          'addTags'.tr,
         ),
         centerTitle: true,
       ),
@@ -40,7 +42,7 @@ class TagsPage extends GetView<TagsController> {
                   ),
                   label: const Text('Tag'),
                   prefixIcon: const Icon(Icons.tag),
-                  hintText: 'Creepy, monsters, clowns, etc...',
+                  hintText: 'tagHint'.tr,
                 ),
                 style: const TextStyle(fontSize: 18),
               ),
@@ -48,22 +50,32 @@ class TagsPage extends GetView<TagsController> {
                 height: 30,
               ),
               Obx(() => Expanded(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Wrap(
-                        direction: Axis.horizontal,
-                        children: controller.tags
-                            .map(
-                              (e) => InkWell(
-                                onLongPress: () {
-                                  controller.removeTag(e);
-                                },
-                                child: _buildTag(e),
+                    child: controller.tags.isNotEmpty
+                        ? SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Wrap(
+                              direction: Axis.horizontal,
+                              children: controller.tags
+                                  .map(
+                                    (e) => InkWell(
+                                      onLongPress: () {
+                                        controller.removeTag(e);
+                                      },
+                                      child: _buildTag(e),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                child: Image.asset(HalloweenImages.jasonMask),
                               ),
-                            )
-                            .toList(),
-                      ),
-                    ),
+                              const Text('Tente adicionar uma tag...')
+                            ],
+                          ),
                   )),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -72,7 +84,7 @@ class TagsPage extends GetView<TagsController> {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: controller.confirm,
-                    child: const Text('Confirmar'),
+                    child: Text('confirm'.tr),
                   ),
                 ),
               ),

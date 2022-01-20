@@ -19,4 +19,9 @@ final Map<String, String> enUs = {
   'edit_photo': 'Edit Photo',
   'signature': 'Signature',
   'save_success': 'Story saved successfully',
+  'addTags': 'Add tags',
+  'tagHint': 'Creepy, monsters, clowns, etc...',
+  'confirm': 'Confirm',
+  'storyPhoto': 'Story Photo',
+  'noTags': 'No Tags',
 };

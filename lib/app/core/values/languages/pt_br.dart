@@ -19,4 +19,9 @@ final Map<String, String> ptBr = {
   'edit_photo': 'Editar foto',
   'signature': 'Assinatura',
   'save_success': 'História salva com sucesso',
+  'addTags': 'Adicionar Tags',
+  'tagHint': 'Fantasmas, monstros, palhaços, etc...',
+  'confirm': 'Confirmar',
+  'storyPhoto': 'Foto da história',
+  'noTags': 'Sem tags',
 };
